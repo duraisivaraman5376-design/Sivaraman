@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="SIVARAMAN Portfolio - Computer Application Student & Aspiring Filmmaker">
+<title>SIVARAMAN | Portfolio</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+scroll-behavior:smooth;
+}
+
+body{
+font-family:'Poppins',sans-serif;
+background:#0a0a0a;
+color:white;
+overflow-x:hidden;
+position:relative;
+}
+
+/* Animated Background */
+body::before{
+content:'';
+position:fixed;
+width:800px;
+height:800px;
+background:radial-gradient(circle,rgba(255,215,0,.18),transparent 70%);
+top:-250px;
+left:-250px;
+animation:moveGlow 10s infinite alternate;
+z-index:-2;
+}
+
+body::after{
+content:'';
+position:fixed;
+width:800px;
+height:800px;
+background:radial-gradient(circle,rgba(255,140,0,.15),transparent 70%);
+bottom:-250px;
+right:-250px;
+animation:moveGlow2 12s infinite alternate;
+z-index:-2;
+}
+
+@keyframes moveGlow{
+100%{
+transform:translate(250px,150px);
+}
+}
+
+@keyframes moveGlow2{
+100%{
+transform:translate(-200px,-150px);
+}
+}
+
+/* Film Grain */
+.grain{
+position:fixed;
+width:100%;
+height:100%;
+background:
+linear-gradient(
+rgba(255,255,255,.02),
+rgba(255,255,255,.02)
+);
+pointer-events:none;
+z-index:-1;
+}
+
+/* Navbar */
+nav{
+position:fixed;
+width:100%;
+top:0;
+background:rgba(0,0,0,.6);
+backdrop-filter:blur(15px);
+padding:20px 8%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+z-index:999;
+}
+
+.logo{
+font-size:24px;
+font-weight:700;
+color:#FFD700;
+}
+
+nav ul{
+display:flex;
+gap:25px;
+list-style:none;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+transition:.3s;
+}
+
+nav a:hover{
+color:#FFD700;
+}
+
+/* Hero */
+.hero{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:20px;
+background:
+linear-gradient(rgba(0,0,0,.75),rgba(0,0,0,.85)),
+url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=1400&q=80');
+background-size:cover;
+background-position:center;
+}
+
+.hero-content{
+max-width:850px;
+}
+
+.hero h1{
+font-size:70px;
+color:#FFD700;
+margin-bottom:10px;
+}
+
+.hero h2{
+font-size:28px;
+margin-bottom:20px;
+font-weight:300;
+}
+
+.hero p{
+font-size:18px;
+opacity:.9;
+margin-bottom:30px;
+}
+
+.btn{
+display:inline-block;
+padding:14px 32px;
+margin:10px;
+border-radius:50px;
+background:linear-gradient(135deg,#FFD700,#FFA500);
+color:black;
+font-weight:600;
+text-decoration:none;
+transition:.4s;
+}
+
+.btn:hover{
+transform:translateY(-5px);
+box-shadow:0 0 25px rgba(255,215,0,.6);
+}
+
+/* Sections */
+section{
+padding:100px 10%;
+}
+
+.section-title{
+text-align:center;
+font-size:38px;
+color:#FFD700;
+margin-bottom:50px;
+}
+
+/* Glass Card */
+.card{
+background:rgba(255,255,255,.05);
+backdrop-filter:blur(15px);
+padding:30px;
+border-radius:20px;
+border:1px solid rgba(255,215,0,.15);
+transition:.4s;
+}
+
+.card:hover{
+transform:translateY(-8px);
+box-shadow:0 0 30px rgba(255,215,0,.25);
+}
+
+/* Skills */
+.skills-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+}
+
+.skill{
+text-align:center;
+padding:20px;
+}
+
+/* Projects */
+.projects-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+gap:25px;
+}
+
+.project h3{
+color:#FFD700;
+margin-bottom:15px;
+}
+
+.project a{
+color:#FFD700;
+text-decoration:none;
+margin-right:15px;
+}
+
+/* Education */
+.education{
+text-align:center;
+}
+
+/* Interests */
+.interests{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+text-align:center;
+}
+
+/* Quote */
+.quote{
+text-align:center;
+font-size:26px;
+font-style:italic;
+color:#FFD700;
+max-width:900px;
+margin:auto;
+}
+
+/* Contact */
+.contact{
+text-align:center;
+}
+
+.contact p{
+margin:12px 0;
+}
+
+/* Footer */
+footer{
+padding:30px;
+text-align:center;
+background:black;
+color:#aaa;
+}
+
+/* Scroll Animation */
+.hidden{
+opacity:0;
+transform:translateY(40px);
+transition:all .8s ease;
+}
+
+.show{
+opacity:1;
+transform:translateY(0);
+}
+
+@media(max-width:768px){
+
+.hero h1{
+font-size:42px;
+}
+
+.hero h2{
+font-size:20px;
+}
+
+nav ul{
+display:none;
+}
+
+.section-title{
+font-size:30px;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="grain"></div>
+
+<nav>
+<div class="logo">SIVARAMAN</div>
+<ul>
+<li><a href="#about">About</a></li>
+<li><a href="#skills">Skills</a></li>
+<li><a href="#projects">Projects</a></li>
+<li><a href="#contact">Contact</a></li>
+</ul>
+</nav>
+
+<section class="hero">
+<div class="hero-content">
+<h1>SIVARAMAN</h1>
+<h2>Cinema is an Emotion. Technology is the Tool.</h2>
+
+<p>
+Computer Application Student • Aspiring Filmmaker • Web Developer
+</p>
+
+<a href="#projects" class="btn">View Projects</a>
+<a href="#contact" class="btn">Contact Me</a>
+</div>
+</section>
+
+<section id="about" class="hidden">
+<h2 class="section-title">About Me</h2>
+
+<div class="card">
+<p>
+I am passionate about cinema and technology. I believe cinema is more than entertainment—it's an emotion and a force that can change lives. Alongside my interest in filmmaking, I am pursuing Computer Applications and continuously learning web technologies and software development.
+<br><br>
+My mission is to combine storytelling and technology to create meaningful experiences that inspire people and bring ideas to life.
+</p>
+</div>
+</section>
+
+<section id="skills" class="hidden">
+<h2 class="section-title">Skills</h2>
+
+<div class="skills-grid">
+
+<div class="card skill">HTML</div>
+<div class="card skill">CSS</div>
+<div class="card skill">JavaScript</div>
+<div class="card skill">MS Word</div>
+<div class="card skill">Project Documentation</div>
+<div class="card skill">Problem Solving</div>
+<div class="card skill">Communication Skills</div>
+<div class="card skill">Content Creation</div>
+
+</div>
+</section>
+
+<section id="projects" class="hidden">
+<h2 class="section-title">Projects</h2>
+
+<div class="projects-grid">
+
+<div class="card project">
+<h3>Movie Review Website</h3>
+<p>Responsive platform for reviewing and rating films.</p>
+<p><b>Tech:</b> HTML, CSS, JavaScript</p>
+<br>
+<a href="#">GitHub</a>
+<a href="#">Live Demo</a>
+</div>
+
+<div class="card project">
+<h3>Student Management System</h3>
+<p>Manage student information efficiently.</p>
+<p><b>Tech:</b> JavaScript, Database</p>
+<br>
+<a href="#">GitHub</a>
+<a href="#">Live Demo</a>
+</div>
+
+<div class="card project">
+<h3>Portfolio Website</h3>
+<p>Personal branding and project showcase website.</p>
+<p><b>Tech:</b> HTML, CSS, JavaScript</p>
+<br>
+<a href="#">GitHub</a>
+<a href="#">Live Demo</a>
+</div>
+
+</div>
+</section>
+
+<section class="hidden">
+<h2 class="section-title">Education</h2>
+
+<div class="card education">
+<h3>Bachelor of Computer Applications (BCA)</h3>
+<p>College Name</p>
+<p>Focused on Software Development, Web Technologies, and Computer Science.</p>
+</div>
+</section>
+
+<section class="hidden">
+<h2 class="section-title">Interests</h2>
+
+<div class="interests">
+
+<div class="card">🎬 Cinema & Filmmaking</div>
+<div class="card">📖 Storytelling</div>
+<div class="card">📷 Photography</div>
+<div class="card">💻 Technology</div>
+<div class="card">🚀 Learning New Skills</div>
+
+</div>
+</section>
+
+<section class="hidden">
+<div class="quote">
+"Cinema is not just a hobby. It's an emotion that gives hope and inspires change."
+</div>
+</section>
+
+<section id="contact" class="hidden">
+<h2 class="section-title">Contact Me</h2>
+
+<div class="card contact">
+<p>📧 yourmail@example.com</p>
+<p>📞 +91 XXXXX XXXXX</p>
+<p>🔗 LinkedIn</p>
+<p>💻 GitHub</p>
+<p>📸 Instagram</p>
+</div>
+</section>
+
+<footer>
+© 2026 SIVARAMAN | Designed with Passion for Cinema & Technology
+</footer>
+
+<script>
+const observer = new IntersectionObserver(entries=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){
+entry.target.classList.add('show');
+}
+});
+});
+
+document.querySelectorAll('.hidden').forEach(el=>{
+observer.observe(el);
+});
+</script>
+
+</body>
+</html>

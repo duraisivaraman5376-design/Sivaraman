@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculator Website</title>
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      color: #fff;
+      transition: background 0.5s ease;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      animation: fadeIn 1s ease;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+      color: #ffeb3b;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 1rem;
+      outline: none;
+      transition: transform 0.2s ease;
+    }
+
+    input:focus {
+      transform: scale(1.02);
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: #ff5722;
+      color: #fff;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background: #e64a19;
+      transform: scale(1.05);
+    }
+
+    .result {
+      font-size: 1.5rem;
+      margin: 20px 0;
+      color: #00e676;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      h1 { font-size: 1.5rem; }
+      .result { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="calculatorPage">
+    <h1>Simple Calculator</h1>
+    <input type="text" id="expression" placeholder="Enter number or expression">
+    <button onclick="calculate()">Submit</button>
+  </div>
+
+  <div class="container" id="resultPage" style="display:none;">
+    <h1>Calculation Result</h1>
+    <div class="result" id="resultOutput"></div>
+    <button onclick="goBack()">Back</button>
+  </div>
+
+  <script>
+    function calculate() {
+      const expr = document.getElementById('expression').value;
+      let result;
+      try {
+        // Safely evaluate mathematical expression
+        result = Function('"use strict"; return (' + expr + ')')();
+        document.getElementById('resultOutput').textContent = result;
+        document.getElementById('calculatorPage').style.display = 'none';
+        document.getElementById('resultPage').style.display = 'block';
+      } catch (error) {
+        alert("Invalid expression. Please try again.");
+      }
+    }
+
+    function goBack() {
+      document.getElementById('resultPage').style.display = 'none';
+      document.getElementById('calculatorPage').style.display = 'block';
+      document.getElementById('expression').value = "";
+    }
+  </script>
+</body>
+</html>
