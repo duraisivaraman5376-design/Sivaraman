@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Birthday Wishing Website</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb, #a6c1ee);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+    .container, .card {
+      background: rgba(255, 255, 255, 0.85);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      text-align: center;
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    input {
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      width: 80%;
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+    button {
+      padding: 12px 25px;
+      border: none;
+      border-radius: 25px;
+      background: linear-gradient(45deg, #ff6ec4, #7873f5);
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    button:hover {
+      transform: scale(1.1);
+    }
+    .card {
+      display: none;
+      background: rgba(0,0,0,0.6);
+      color: #fff;
+      animation: pop 1s ease forwards;
+    }
+    @keyframes pop {
+      from { transform: scale(0.5); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    h1 {
+      font-size: 50px;
+      background: linear-gradient(45deg, #ff6ec4, #7873f5, #fbc2eb);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 20px;
+      animation: glow 2s infinite alternate;
+    }
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #fff; }
+      to { text-shadow: 0 0 25px #ff6ec4, 0 0 35px #7873f5; }
+    }
+    h2 {
+      font-size: 36px;
+      margin-bottom: 20px;
+      color: #ffd700;
+    }
+    p {
+      font-size: 20px;
+      margin: 10px 0;
+      color: #f0f8ff;
+    }
+  </style>
+</head>
+<body>
+  <!-- Input Page -->
+  <div class="container" id="inputPage">
+    <h2>Enter the Name</h2>
+    <form onsubmit="showCard(event)">
+      <input type="text" id="name" placeholder="Type a name..." required>
+      <br>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <!-- Greeting Card -->
+  <div class="card" id="cardPage">
+    <h1>Happy Birthday</h1>
+    <h2 id="displayName"></h2>
+    <p>🎂 Wishing you endless joy, love, and laughter today and always!</p>
+    <p>🌟 May your special day be filled with unforgettable moments and happiness!</p>
+  </div>
+
+  <script>
+    function showCard(event) {
+      event.preventDefault();
+      const name = document.getElementById('name').value;
+      document.getElementById('displayName').textContent = name;
+
+      document.getElementById('inputPage').style.display = 'none';
+      document.getElementById('cardPage').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
