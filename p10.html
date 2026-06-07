@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Devaraj Portfolio</title>
+  <style>
+    /* Global Styles */
+    * {margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif;}
+    body {
+      background: linear-gradient(135deg, #000000, #1a1a1a);
+      color: #fff;
+      overflow-x: hidden;
+    }
+    a {text-decoration:none; color:inherit;}
+    h1,h2,h3 {color:gold;}
+    section {padding:80px 10%;}
+
+    /* Hero Section */
+    .hero {
+      height:100vh;
+      background: url('https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+      display:flex; flex-direction:column; justify-content:center; align-items:center;
+      text-align:center;
+      position:relative;
+    }
+    .hero::after {
+      content:""; position:absolute; top:0; left:0; width:100%; height:100%;
+      background:rgba(0,0,0,0.6);
+    }
+    .hero-content {position:relative; z-index:1;}
+    .hero h1 {font-size:3rem; margin-bottom:10px;}
+    .hero p {font-size:1.2rem; margin-bottom:20px;}
+    .btn {
+      padding:12px 25px; margin:10px; border:none; cursor:pointer;
+      background:gold; color:#000; font-weight:bold; border-radius:30px;
+      transition:0.3s;
+    }
+    .btn:hover {background:#fff; color:#000;}
+
+    /* Glassmorphism Card */
+    .card {
+      background:rgba(255,255,255,0.1);
+      backdrop-filter:blur(10px);
+      border-radius:15px;
+      padding:20px;
+      margin:20px 0;
+      transition:transform 0.3s;
+    }
+    .card:hover {transform:translateY(-10px);}
+
+    /* Skills Grid */
+    .skills-grid {
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+      gap:20px;
+    }
+    .skill {background:#111; padding:15px; border-radius:10px; text-align:center;}
+
+    /* Projects */
+    .projects-grid {
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:20px;
+    }
+    .project-card {background:#111; padding:20px; border-radius:10px;}
+    .project-card a {color:gold; display:inline-block; margin-top:10px;}
+
+    /* Contact */
+    .contact-info {line-height:2;}
+
+    /* Quote Section */
+    .quote {
+      background:#111; padding:40px; text-align:center; font-style:italic;
+      border-left:5px solid gold; margin:40px 0;
+    }
+
+    /* Responsive */
+    @media(max-width:768px){
+      .hero h1 {font-size:2rem;}
+      section {padding:60px 5%;}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Devaraj</h1>
+      <p>"Cinema is an Emotion. Technology is the Tool."</p>
+      <button class="btn">View Projects</button>
+      <button class="btn">Contact Me</button>
+    </div>
+  </section>
+
+  <!-- About Me -->
+  <section id="about">
+    <h2>About Me</h2>
+    <div class="card">
+      <p>I am passionate about cinema and technology. I believe cinema is more than entertainment—it's an emotion and a force that can change lives. Alongside my interest in filmmaking, I am pursuing Computer Science and continuously learning web technologies and software development.</p>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills">
+    <h2>Skills</h2>
+    <div class="skills-grid">
+      <div class="skill">HTML</div>
+      <div class="skill">CSS</div>
+      <div class="skill">JavaScript</div>
+      <div class="skill">MS Word</div>
+      <div class="skill">Project Documentation</div>
+      <div class="skill">Problem Solving</div>
+      <div class="skill">Communication Skills</div>
+      <div class="skill">Content Creation</div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="projects-grid">
+      <div class="project-card">
+        <h3>Portfolio Website</h3>
+        <p>A modern responsive portfolio showcasing skills and projects.</p>
+        <p><strong>Tech:</strong> HTML, CSS, JS</p>
+        <a href="#">GitHub</a> | <a href="#">Live Demo</a>
+      </div>
+      <div class="project-card">
+        <h3>Film Blog</h3>
+        <p>A blog platform for sharing film reviews and cinematic thoughts.</p>
+        <p><strong>Tech:</strong> HTML, CSS, JS</p>
+        <a href="#">GitHub</a> | <a href="#">Live Demo</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Education -->
+  <section id="education">
+    <h2>Education</h2>
+    <div class="card">
+      <p>Bachelor of Computer Science</p>
+      <p>College details and academic achievements go here.</p>
+    </div>
+  </section>
+
+  <!-- Interests -->
+  <section id="interests">
+    <h2>Interests</h2>
+    <div class="card">
+      <ul>
+        <li>Cinema & Filmmaking</li>
+        <li>Storytelling</li>
+        <li>Photography</li>
+        <li>Technology</li>
+        <li>Learning New Skills</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Quote -->
+  <section class="quote">
+    "Cinema is not just a hobby. It's an emotion that gives hope and inspires change."
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <h2>Contact</h2>
+    <div class="card contact-info">
+      <p>Email: devaraj@email.com</p>
+      <p>Phone: +91 98765 43210</p>
+      <p>LinkedIn: linkedin.com/in/devaraj</p>
+      <p>GitHub: github.com/devaraj</p>
+      <p>Instagram: @devaraj</p>
+    </div>
+  </section>
+
+  <script>
+    // Smooth scroll effect for buttons
+    document.querySelectorAll('.btn').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const target = btn.textContent.includes('Projects') ? '#projects' : '#contact';
+        document.querySelector(target).scrollIntoView({behavior:'smooth'});
+      });
+    });
+  </script>
+</body>
+</html>
