@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fresh Mart Grocery - Deep Galaxy Digital Marketplace</title>
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #2ecc71;
+            --primary-dark: #27ae60;
+            --body-bg: #090a0f;
+            --panel-bg: rgba(20, 24, 35, 0.85);
+            --text-color: #f5f6fa;
+            --light-text: #a0a8b3;
+            --border-color: rgba(46, 204, 113, 0.2);
+            --shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        [data-theme="light"] {
+            --body-bg: #f4f9f4;
+            --panel-bg: rgba(255, 255, 255, 0.9);
+            --text-color: #2c3e50;
+            --light-text: #7f8c8d;
+            --border-color: #e8f0e8;
+            --shadow: 0 8px 25px rgba(46, 204, 113, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--body-bg);
+            color: var(--text-color);
+            overflow-x: hidden;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        /* Deep Interactive 3D Galaxy Canvas Backdrop Frame */
+        #galaxy-universe-wrapper {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            background: radial-gradient(circle at 50% 50%, #111726 0%, #07080c 100%);
+            perspective: 1000px;
+        }
+        .galaxy-nebula {
+            position: absolute;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(46, 204, 113, 0.12) 0%, transparent 70%);
+            top: 10%; left: 20%;
+            border-radius: 50%;
+            filter: blur(40px);
+            animation: cosmicOrbit 35s linear infinite;
+        }
+        .galaxy-nebula-secondary {
+            position: absolute;
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(52, 152, 219, 0.08) 0%, transparent 70%);
+            bottom: 15%; right: 15%;
+            border-radius: 50%;
+            filter: blur(50px);
+            animation: cosmicOrbit 25s linear infinite reverse;
+        }
+        .starfield-layer {
+            position: absolute;
+            width: 200%; height: 200%;
+            top: -50%; left: -50%;
+            background-image: 
+                radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+                radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
+                radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px);
+            background-size: 550px 550px, 350px 350px, 250px 250px;
+            background-position: 0 0, 40px 60px, 130px 270px;
+            opacity: 0.4;
+            transform: translateZ(-200px);
+            transition: transform 0.2s ease-out;
+        }
+
+        @keyframes cosmicOrbit {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.15); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        /* Toast Notifications Engine Layout */
+        #notification-toast-box {
+            position: fixed;
+            top: 90px; right: 20px;
+            z-index: 5000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .toast-banner {
+            background: #141923;
+            color: #ffffff;
+            padding: 15px 25px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            backdrop-filter: blur(10px);
+            border-left: 5px solid var(--primary-color);
+            animation: toastSlideIn 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+        }
+        .toast-banner.welcome-alert { border-left-color: #3498db; }
+        @keyframes toastSlideIn {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        header {
+            background: var(--panel-bg);
+            backdrop-filter: blur(12px);
+            box-shadow: var(--shadow);
+            position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .navbar {
+            display: flex; justify-content: space-between; align-items: center;
+            max-width: 1200px; margin: 0 auto; padding: 15px 20px;
+        }
+        .logo {
+            font-size: 26px; font-weight: 700; color: var(--primary-color);
+            text-decoration: none; display: flex; align-items: center; gap: 10px; cursor: pointer;
+        }
+        .nav-links { display: flex; list-style: none; gap: 15px; align-items: center; }
+        .nav-links a {
+            text-decoration: none; color: var(--text-color); font-weight: 500;
+            transition: var(--transition); cursor: pointer; padding: 8px 16px; border-radius: 30px;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            color: white; background: var(--primary-color);
+            box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
+        }
+        .nav-right { display: flex; align-items: center; gap: 20px; }
+        .theme-toggle {
+            background: none; border: 2px solid var(--border-color); color: var(--text-color);
+            width: 40px; height: 40px; border-radius: 50%; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; transition: var(--transition);
+        }
+        .cart-icon-wrapper { position: relative; cursor: pointer; font-size: 24px; color: var(--text-color); }
+        #cart-badge {
+            position: absolute; top: -8px; right: -10px;
+            background: #ff4757; color: white; font-size: 11px; font-weight: 700;
+            padding: 2px 7px; border-radius: 50%;
+        }
+
+        .page-section {
+            display: none; max-width: 1200px; margin: 40px auto; padding: 0 20px;
+            animation: interfaceSlideUp 0.5s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+            min-height: 65vh;
+        }
+        .page-section.active-page { display: block; }
+        @keyframes interfaceSlideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-showcase {
+            background: linear-gradient(135deg, rgba(46, 204, 113, 0.85), rgba(20, 24, 35, 0.95)), url('https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1200&q=80');
+            background-size: cover; background-position: center; border-radius: 20px;
+            padding: 80px 60px; color: white; text-align: center;
+            box-shadow: var(--shadow); border: 1px solid var(--border-color);
+        }
+        .hero-showcase h1 { font-size: 46px; margin-bottom: 15px; text-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .hero-showcase p { font-size: 19px; margin-bottom: 35px; opacity: 0.9; }
+
+        .action-cta-btn {
+            background: var(--primary-color); color: white; padding: 14px 40px;
+            font-size: 16px; font-weight: 600; border: none; border-radius: 50px;
+            cursor: pointer; transition: var(--transition); box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
+        }
+        .action-cta-btn:hover { transform: translateY(-2px); background: var(--primary-dark); }
+
+        .grid-header { font-size: 28px; margin-bottom: 30px; font-weight: 700; position: relative; padding-bottom: 10px; }
+        .grid-header::after { content: ''; width: 60px; height: 4px; background: var(--primary-color); position: absolute; bottom: 0; left: 0; border-radius: 2px; }
+
+        .categories-grid-wrapper { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; }
+        .cat-item-card {
+            background: var(--panel-bg); backdrop-filter: blur(10px); border-radius: 16px;
+            padding: 30px 15px; text-align: center; cursor: pointer; box-shadow: var(--shadow);
+            border: 1px solid var(--border-color); transition: var(--transition);
+        }
+        .cat-item-card:hover { transform: translateY(-5px) scale(1.03); border-color: var(--primary-color); background: rgba(46, 204, 113, 0.1); }
+        .cat-item-card i { font-size: 42px; color: var(--primary-color); margin-bottom: 15px; }
+
+        .products-showcase-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 25px; }
+        .product-shelf-card {
+            background: var(--panel-bg); backdrop-filter: blur(10px); border-radius: 16px;
+            padding: 20px; box-shadow: var(--shadow); transition: var(--transition);
+            border: 1px solid var(--border-color); text-align: center;
+        }
+        .product-shelf-card:hover { transform: translateY(-6px); border-color: var(--primary-color); }
+        .product-shelf-img { width: 100%; height: 150px; object-fit: cover; border-radius: 12px; margin-bottom: 15px; cursor: pointer; }
+        .product-shelf-title { font-size: 16px; font-weight: 600; margin-bottom: 10px; height: 45px; display: flex; align-items: center; justify-content: center; }
+        .product-shelf-price { font-size: 20px; font-weight: 700; color: var(--primary-color); margin-bottom: 15px; display: block; }
+
+        .info-modal-backdrop {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7); backdrop-filter: blur(6px);
+            z-index: 2000; display: none; align-items: center; justify-content: center;
+        }
+        .info-modal-box { background: #141823; border: 1px solid var(--border-color); width: 90%; max-width: 450px; padding: 30px; border-radius: 20px; position: relative; animation: zoomIn 0.3s ease; }
+        @keyframes zoomIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .close-modal-btn { position: absolute; top: 20px; right: 20px; background: none; border: none; font-size: 24px; color: var(--light-text); cursor: pointer; }
+
+        .split-checkout-layout { display: grid; grid-template-columns: 1.1fr 1fr; gap: 30px; }
+        @media (max-width: 768px) { .split-checkout-layout { grid-template-columns: 1fr; } }
+        .content-card-panel { background: var(--panel-bg); backdrop-filter: blur(10px); padding: 30px; border-radius: 16px; box-shadow: var(--shadow); border: 1px solid var(--border-color); }
+        .basket-item-line { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border-color); }
+        
+        .quantity-pill {
+            display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05);
+            padding: 4px 10px; border-radius: 20px; border: 1px solid var(--border-color);
+        }
+        .quantity-pill button { background: none; border: none; width: 20px; height: 20px; cursor: pointer; font-weight: bold; color: var(--text-color); }
+
+        .input-row { margin-bottom: 15px; }
+        .input-row label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 13px; color: var(--primary-color); }
+        .input-row input, .input-row textarea { 
+            width: 100%; padding: 12px; background: rgba(0,0,0,0.2); color: #ffffff; 
+            border: 1px solid var(--border-color); border-radius: 8px; font-size: 14px; transition: var(--transition);
+        }
+        .input-row input:focus, .input-row textarea:focus { border-color: var(--primary-color); outline: none; background: rgba(0,0,0,0.4); }
+        .input-row input[readonly] { background: rgba(255,255,255,0.05); color: #a0a8b3; opacity: 0.85; }
+
+        .owner-price-config-box {
+            margin-top: 15px; padding: 12px; background: rgba(230, 126, 34, 0.1); 
+            border: 1px dashed #e67e22; border-radius: 10px; text-align: left;
+        }
+        .owner-price-config-box label { font-size: 12px; color: #e67e22; font-weight: 600; display: block; margin-bottom: 4px; }
+        .owner-price-input-row { display: flex; gap: 8px; }
+        .owner-price-input-row input { background: #000; color: #fff; border: 1px solid #e67e22; padding: 6px 10px; border-radius: 6px; font-size: 13px; width: 100px; }
+        .owner-update-btn { background: #e67e22; color: #fff; border: none; padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; }
+
+        .inline-success-banner {
+            background: rgba(46, 204, 113, 0.15); border: 2px solid #2ecc71; color: #2ecc71;
+            padding: 20px; border-radius: 12px; margin-bottom: 25px; display: flex; align-items: center; gap: 15px;
+        }
+
+        .invoice-receipt-sheet { background: #ffffff; color: #2c3e50; padding: 35px; border-radius: 12px; border: 1px solid #e2e8f0; max-width: 600px; margin: 0 auto 20px; }
+        .receipt-header-title { text-align: center; margin-bottom: 20px; }
+        .print-trigger-btn { background: #34495e; color: white; border: none; padding: 12px 30px; border-radius: 30px; font-weight: 600; cursor: pointer; margin: 10px; transition: var(--transition); }
+        .print-trigger-btn:hover { background: #2c3e50; }
+
+        .history-timeline-box { margin-top: 40px; background: var(--panel-bg); padding: 30px; border-radius: 16px; box-shadow: var(--shadow); border: 1px solid var(--border-color); }
+        .history-table { width: 100%; border-collapse: collapse; text-align: left; margin-top: 15px; }
+        .history-table th, .history-table td { padding: 12px; border-bottom: 1px solid var(--border-color); font-size: 14px; }
+        .history-table th { background: rgba(255,255,255,0.05); color: var(--primary-color); }
+
+        .block-action-btn { width: 100%; background: var(--primary-color); color: white; border: none; padding: 14px; font-size: 16px; font-weight: 600; border-radius: 30px; cursor: pointer; transition: var(--transition); }
+        .block-action-btn:hover { background: var(--primary-dark); transform: translateY(-1px); }
+
+        @media print {
+            body * { visibility: hidden; background: white !important; color: black !important; }
+            .invoice-receipt-sheet, .invoice-receipt-sheet * { visibility: visible; }
+            .invoice-receipt-sheet { position: absolute; left: 0; top: 0; width: 100%; border: none; }
+            .print-trigger-btn { display: none; }
+        }
+
+        footer { background: #06080c; color: #a4b3a8; padding: 40px 20px 20px; margin-top: 80px; border-top: 2px solid var(--border-color); }
+        .footer-grid-frame { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; }
+        .footer-grid-frame h4 { color: white; margin-bottom: 12px; }
+    </style>
+</head>
+<body>
+
+    <!-- 3D Interactive Cosmic Galaxy Backdrop Structure -->
+    <div id="galaxy-universe-wrapper">
+        <div class="galaxy-nebula"></div>
+        <div class="galaxy-nebula-secondary"></div>
+        <div id="starfield-parallax" class="starfield-layer"></div>
+    </div>
+
+    <!-- Active Live Client Toast Alerts Target Holder -->
+    <div id="notification-toast-box"></div>
+
+    <!-- Navigation Header -->
+    <header>
+        <div class="navbar">
+            <a onclick="switchActiveView('home')" class="logo">
+                <i class="fa-solid fa-space-shuttle"></i> Fresh Mart Grocery
+            </a>
+            <ul class="nav-links">
+                <li><a id="navitem-home" onclick="switchActiveView('home')" class="active">Home</a></li>
+                <li><a id="navitem-categories" onclick="switchActiveView('categories')">Categories</a></li>
+                <li><a id="navitem-products" onclick="switchActiveView('products')">Products</a></li>
+                <li><a id="navitem-checkout" onclick="switchActiveView('checkout')">Checkout</a></li>
+                <li><a id="navitem-billing" onclick="switchActiveView('billing')">Billing & History</a></li>
+            </ul>
+            <div class="nav-right">
+                <button class="theme-toggle" onclick="toggleColorTheme()">
+                    <i class="fa-solid fa-sun"></i>
+                </button>
+                <div class="cart-icon-wrapper" onclick="switchActiveView('checkout')">
+                    <i class="fa-solid fa-basket-shopping"></i>
+                    <span id="cart-badge">0</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Home Panel Section View Container -->
+    <section id="pageview-home" class="page-section active-page">
+        <div class="hero-showcase">
+            <h1>Premium Cosmic Grocery Portal</h1>
+            <p>Experience ultra-fast shopping under depth accelerated visual arrays. Comprehensive inventory management control.</p>
+            <button class="action-cta-btn" onclick="switchActiveView('categories')">
+                Launch Catalogue <i class="fa-solid fa-meteor"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- Categories Department View Section Container -->
+    <section id="pageview-categories" class="page-section">
+        <h2 class="grid-header">Shop By Category</h2>
+        <div class="categories-grid-wrapper">
+            <div class="cat-item-card" onclick="routeToFilteredCategory('Fruits')"><i class="fa-solid fa-apple-whole"></i><h3>Fruits</h3></div>
+            <div class="cat-item-card" onclick="routeToFilteredCategory('Vegetables')"><i class="fa-solid fa-carrot"></i><h3>Vegetables</h3></div>
+            <div class="cat-item-card" onclick="routeToFilteredCategory('Dairy Products')"><i class="fa-solid fa-cheese"></i><h3>Dairy Products</h3></div>
+            <div class="cat-item-card" onclick="routeToFilteredCategory('Snacks')"><i class="fa-solid fa-cookie-bite"></i><h3>Snacks</h3></div>
+            <div class="cat-item-card" onclick="routeToFilteredCategory('Beverages')"><i class="fa-solid fa-glass-water"></i><h3>Beverages</h3></div>
+            <div class="cat-item-card" onclick="routeToFilteredCategory('Household Items')"><i class="fa-solid fa-soap"></i><h3>Household Items</h3></div>
+        </div>
+    </section>
+
+    <!-- Product Grid Catalogue View Section Container -->
+    <section id="pageview-products" class="page-section">
+        <h2 id="product-shelf-title-header" class="grid-header">All Products</h2>
+        <div id="product-render-target-grid" class="products-showcase-grid"></div>
+    </section>
+
+    <!-- Checkout Desk Layout View Section Container -->
+    <section id="pageview-checkout" class="page-section">
+        <h2 class="grid-header">Review Basket & Checkout</h2>
+        <div class="split-checkout-layout">
+            
+            <div class="content-card-panel">
+                <h3 style="margin-bottom:20px;">Your Basket Rows</h3>
+                <div id="checkout-basket-lines-container"></div>
+                <div style="display:flex; justify-content:space-between; font-weight:700; font-size:22px; margin-top:20px; padding-top:15px; border-top:1px solid var(--border-color);">
+                    <span>Total Bill Cost:</span>
+                    <span id="txt-calculated-gross-total">₹0.00</span>
+                </div>
+            </div>
+
+            <!-- Intelligent Profile Recognition Input Frame -->
+            <div class="content-card-panel">
+                <h3 style="margin-bottom:15px;">Customer Profile Search</h3>
+                
+                <form id="checkout-core-form" onsubmit="commitCheckoutFormOrder(event)">
+                    <div class="input-row">
+                        <label>Contact Phone Number *</label>
+                        <input type="tel" id="form-cust-phone" required placeholder="Type mobile number line..." oninput="handleAutomatedPhoneLookup(this.value)">
+                    </div>
+                    <div class="input-row">
+                        <label>Assigned Customer ID</label>
+                        <input type="text" id="form-cust-id" readonly placeholder="Auto-generated ID string">
+                    </div>
+                    <div class="input-row">
+                        <label>Accumulated Wallet Coins Balance</label>
+                        <input type="text" id="form-cust-coins" readonly placeholder="₹0.00">
+                    </div>
+                    <div class="input-row">
+                        <label>Customer Full Name *</label>
+                        <input type="text" id="form-cust-name" required placeholder="Enter buyer name profile details">
+                    </div>
+                    <div class="input-row">
+                        <label>Home Delivery Address *</label>
+                        <textarea id="form-cust-address" rows="2" required placeholder="Enter address details here..."></textarea>
+                    </div>
+
+                    <button type="submit" class="block-action-btn">Confirm & Process Order</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Invoicing Statements and Logs Storage View Section Container -->
+    <section id="pageview-billing" class="page-section">
+        <h2 class="grid-header">Invoice Desk & Order Logs</h2>
+        
+        <div id="inline-alert-success-box" style="display: none;" class="inline-success-banner">
+            <i class="fa-solid fa-circle-check" style="font-size: 32px;"></i>
+            <div>
+                <h4 style="font-size: 16px; font-weight: 700; margin-bottom: 2px;">Your Order Was Placed Successfully!</h4>
+                <p style="font-size: 13px; opacity: 0.9;">Your delivery routing file has been updated down below.</p>
+            </div>
+        </div>
+
+        <div id="wrapper-current-invoice-card" style="display: none;">
+            <div id="printable-invoice-slip" class="invoice-receipt-sheet"></div>
+            <div style="text-align:center; margin-bottom:30px;">
+                <button class="print-trigger-btn" onclick="window.print()"><i class="fa-solid fa-print"></i> Print Official Bill</button>
+            </div>
+        </div>
+
+        <div class="history-timeline-box">
+            <h3>Complete Customer Order History Records</h3>
+            <div style="overflow-x:auto;">
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Timestamp</th>
+                            <th>Items Summary</th>
+                            <th>Net Total Amount</th>
+                            <th>Delivery Address</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-log-table-rows">
+                        <tr>
+                            <td colspan="5" style="text-align:center; padding:20px;">No historical purchase records found yet.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modals Node Viewport -->
+    <div id="details-modal-wrapper" class="info-modal-backdrop" onclick="closeProductModal()">
+        <div class="info-modal-box" onclick="event.stopPropagation()">
+            <button class="close-modal-btn" onclick="closeProductModal()">&times;</button>
+            <div id="modal-content-inject-target"></div>
+        </div>
+    </div>
+
+    <!-- Main Footer Block Elements -->
+    <footer>
+        <div class="footer-grid-frame">
+            <div class="footer-col">
+                <h4>Fresh Mart Grocery</h4>
+                <p>Premium standard consumables logistics platform executing secure home delivery operations.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Headquarters Outpost</h4>
+                <p><i class="fa-solid fa-location-dot"></i> Maharajapuram Main Road,</p>
+                <p>Tamil Nadu, India</p>
+            </div>
+            <div class="footer-col">
+                <h4>Contact Points</h4>
+                <p><i class="fa-solid fa-phone"></i> Helpline Support Desks</p>
+                <p><i class="fa-solid fa-envelope"></i> E-Desk Channels</p>
+            </div>
+        </div>
+        <p style="text-align:center; font-size:12px; margin-top:30px; padding-top:20px; border-top:1px solid rgba(255,255,255,0.05); color:#596d60;">&copy; 2026 Fresh Mart Grocery. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Engine Control Logic Script -->
+    <script>
+        // Massive inventory database arrays containing exactly 10 items per category (60 total)
+        let productsMasterInventoryList = [
+            // --- FRUITS ---
+            { id: 1, name: "Fresh Red Apples", price: 180, category: "Fruits", type: "Organic Fruit", desc: "Crisp local orchard selections.", img: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=300&q=80" },
+            { id: 2, name: "Cavendish Bananas", price: 60, category: "Fruits", type: "Tropical Fruit", desc: "Naturally ripened sweet bananas.", img: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=300&q=80" },
+            { id: 3, name: "Valencia Oranges", price: 120, category: "Fruits", type: "Citrus Fruit", desc: "Juicy high vitamin nutrient fruit packs.", img: "https://images.unsplash.com/photo-1547514701-42782101795e?auto=format&fit=crop&w=300&q=80" },
+            { id: 4, name: "Sweet Strawberries", price: 210, category: "Fruits", type: "Berry Fruit", desc: "Fresh red greenhouse tracking strawberries.", img: "https://images.unsplash.com/photo-1464965911861-746a04b4bca6?auto=format&fit=crop&w=300&q=80" },
+            { id: 5, name: "Green Seedless Grapes", price: 90, category: "Fruits", type: "Vine Fruit", desc: "Sweet crunchy dessert table grapes crisp.", img: "https://images.unsplash.com/photo-1537640538966-79f369143f8f?auto=format&fit=crop&w=300&q=80" },
+            { id: 6, name: "Fresh Royal Mangoes", price: 150, category: "Fruits", type: "Seasonal Fruit", desc: "Premium sweet pulpy local king mangoes.", img: "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=300&q=80" },
+            { id: 7, name: "Tender Watermelon", price: 50, category: "Fruits", type: "Hydrating Fruit", desc: "Large fluid rich summer cooling fruit slices.", img: "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=300&q=80" },
+            { id: 8, name: "Rich Thai Papaya", price: 70, category: "Fruits", type: "Tropical Fruit", desc: "Sweet enzyme heavy orange internal flesh papayas.", img: "https://images.unsplash.com/photo-1526318896980-cf78c088247c?auto=format&fit=crop&w=300&q=80" },
+            { id: 9, name: "Kiwi Fruit Gold", price: 160, category: "Fruits", type: "Imported Fruit", desc: "Tangy vitamin rich emerald centers.", img: "https://images.unsplash.com/photo-1585059895524-72359e06133a?auto=format&fit=crop&w=300&q=80" },
+            { id: 10, name: "Fresh Pomegranate", price: 190, category: "Fruits", type: "Antioxidant Fruit", desc: "Ruby red juicy seed vesicles inside tracking.", img: "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=300&q=80" },
+
+            // --- VEGETABLES ---
+            { id: 11, name: "Fresh Tender Carrots", price: 45, category: "Vegetables", type: "Root vegetable", desc: "Pre-washed crisp sweet orange root crop.", img: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?auto=format&fit=crop&w=300&q=80" },
+            { id: 12, name: "Premium Green Broccoli", price: 90, category: "Vegetables", type: "Cruciferous", desc: "Dense nutrient high-fiber green florets.", img: "https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=300&q=80" },
+            { id: 13, name: "Country Potatoes", price: 35, category: "Vegetables", type: "Tuber vegetable", desc: "Starch heavy baking potatoes.", img: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=300&q=80" },
+            { id: 14, name: "Red Hybrid Tomatoes", price: 40, category: "Vegetables", type: "Vine vegetable", desc: "Juicy sour cooking base grade tomatoes.", img: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=300&q=80" },
+            { id: 15, name: "Fresh Red Onions", price: 48, category: "Vegetables", type: "Bulb vegetable", desc: "Pungent premium quality purple cooking onions.", img: "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=300&q=80" },
+            { id: 16, name: "Crisp Green Capsicum", price: 55, category: "Vegetables", type: "Pepper vegetable", desc: "Mild spice sweet crunchy hollow bell peppers.", img: "https://images.unsplash.com/photo-1563565312874-84ae299f133a?auto=format&fit=crop&w=300&q=80" },
+            { id: 17, name: "Fresh Cauliflower Head", price: 42, category: "Vegetables", type: "Cruciferous", desc: "Clean white packed dense cruciferous vegetable.", img: "https://images.unsplash.com/photo-1568584711075-3d021a7c3ec3?auto=format&fit=crop&w=300&q=80" },
+            { id: 18, name: "Tender Okra / Ladies Finger", price: 38, category: "Vegetables", type: "Pod vegetable", desc: "Fresh green fiber heavy cooking pods.", img: "https://images.unsplash.com/photo-1625938146369-adc83368bda7?auto=format&fit=crop&w=300&q=80" },
+            { id: 19, name: "Long English Cucumber", price: 30, category: "Vegetables", type: "Salad vegetable", desc: "High hydration green skin slicing cucumber frames.", img: "https://images.unsplash.com/photo-1516259762381-22954d7d3ad2?auto=format&fit=crop&w=300&q=80" },
+            { id: 20, name: "Fresh Spinach Bunch", price: 25, category: "Vegetables", type: "Leafy green", desc: "Iron rich organic triple washed green leaves.", img: "https://images.unsplash.com/photo-1576045057995-568f588f82fb?auto=format&fit=crop&w=300&q=80" },
+
+            // --- DAIRY PRODUCTS ---
+            { id: 21, name: "Homogenized Whole Milk", price: 65, category: "Dairy Products", type: "Liquid Dairy", desc: "Rich in calcium pasteurized dairy milk.", img: "https://images.unsplash.com/photo-1563636619-e9143da7973b?auto=format&fit=crop&w=300&q=80" },
+            { id: 22, name: "Pure Salted Butter Block", price: 120, category: "Dairy Products", type: "Dairy Fat Block", desc: "Creamy traditional churned real dairy butter fats.", img: "https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?auto=format&fit=crop&w=300&q=80" },
+            { id: 23, name: "Cheddar Cheese Slices", price: 150, category: "Dairy Products", type: "Processed Cheese", desc: "Smooth melting savory processed yellow cheese blocks.", img: "https://images.unsplash.com/photo-1528750951167-53d4a5c9b17c?auto=format&fit=crop&w=300&q=80" },
+            { id: 24, name: "Fresh Dairy Paneer", price: 110, category: "Dairy Products", type: "Cottage Cheese Cube", desc: "Soft paneer blocks.", img: "https://images.unsplash.com/photo-1601050690597-df056fb4ce78?auto=format&fit=crop&w=300&q=80" },
+            { id: 25, name: "Natural Set Curd/Yogurt", price: 45, category: "Dairy Products", type: "Fermented Dairy", desc: "Probiotic active culture thick white cooking curd.", img: "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=300&q=80" },
+            { id: 26, name: "Amul Fresh Cream", price: 95, category: "Dairy Products", type: "High Fat Cream", desc: "Low fat smooth pouring grade luxury dairy cream.", img: "https://images.unsplash.com/photo-1600431521340-491eca880813?auto=format&fit=crop&w=300&q=80" },
+            { id: 27, name: "Organic Mozzarella Shredded", price: 190, category: "Dairy Products", type: "Shredded Cheese", desc: "High stretch traditional white pizza cheese granules.", img: "https://images.unsplash.com/photo-1559561853-08026f989595?auto=format&fit=crop&w=300&q=80" },
+            { id: 28, name: "Sweet Almond Milk Pack", price: 180, category: "Dairy Products", type: "Plant Alternative", desc: "Lactose free nut derived premium alternative fluids.", img: "https://images.unsplash.com/photo-1553456558-aff63285bdd1?auto=format&fit=crop&w=300&q=80" },
+            { id: 29, name: "Premium Ghee Tin", price: 340, category: "Dairy Products", type: "Clarified Butter", desc: "Aromatic pure golden clarified cow butter oils.", img: "https://images.unsplash.com/photo-1622484211148-716598e04144?auto=format&fit=crop&w=300&q=80" },
+            { id: 30, name: "Flavored Chocolate Milk", price: 40, category: "Dairy Products", type: "Sweetened Liquid", desc: "Sterilized dairy milk mixed with real cocoa powders.", img: "https://images.unsplash.com/photo-1541658016709-82535e94bc69?auto=format&fit=crop&w=300&q=80" },
+
+            // --- SNACKS ---
+            { id: 31, name: "Potato Chips Salted", price: 30, category: "Snacks", type: "Crispy Fried", desc: "Thin golden potato chips fried cleanly.", img: "https://images.unsplash.com/photo-1566478431375-704336150a29?auto=format&fit=crop&w=300&q=80" },
+            { id: 32, name: "Choco Cookie Pack", price: 50, category: "Snacks", type: "Baked Goods", desc: "Oven baked sweet cookies loaded with chocolate.", img: "https://images.unsplash.com/photo-1499636136210-6f4ce9127154?auto=format&fit=crop&w=300&q=80" },
+            { id: 33, name: "Roasted Salted Cashews", price: 240, category: "Snacks", type: "Dry Fruits", desc: "Crunchy oven toasted real jumbo whole cashews.", img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=300&q=80" },
+            { id: 34, name: "Crunchy Nacho Chips", price: 60, category: "Snacks", type: "Corn Snack", desc: "Mexican style stone ground corn tortilla snacks.", img: "https://images.unsplash.com/photo-1518047601542-79f18c655718?auto=format&fit=crop&w=300&q=80" },
+            { id: 35, name: "Spicy Masala Peanut Pack", price: 35, category: "Snacks", type: "Fried Legume", desc: "Crisp gram flour coated chili seasoned nut array.", img: "https://images.unsplash.com/photo-1569562211093-4ed0d0758f12?auto=format&fit=crop&w=300&q=80" },
+            { id: 36, name: "Dark Chocolate Bar 75%", price: 120, category: "Snacks", type: "Confectionery", desc: "Rich bitter sweet premium single source cocoa bar.", img: "https://images.unsplash.com/photo-1549007994-cb92ca87df46?auto=format&fit=crop&w=300&q=80" },
+            { id: 37, name: "Oatmeal Diet Crackers", price: 45, category: "Snacks", type: "Baked Grain", desc: "Zero sugar high-fiber organic savory flat crackers.", img: "https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?auto=format&fit=crop&w=300&q=80" },
+            { id: 38, name: "Sweet Gummy Worms", price: 75, category: "Snacks", type: "Gelatin Candy", desc: "Chewy sugar dusted synthetic tart neon colors candy.", img: "https://images.unsplash.com/photo-1581798459219-318e76aecc7b?auto=format&fit=crop&w=300&q=80" },
+            { id: 39, name: "Microwave Butter Popcorn", price: 80, category: "Snacks", type: "Expansion Grain", desc: "Hard expansion corn kernels packed in rich lipids.", img: "https://images.unsplash.com/photo-1578849278619-e73505e9610f?auto=format&fit=crop&w=300&q=80" },
+            { id: 40, name: "Crispy Pretzel Twists", price: 95, category: "Snacks", type: "Knot Biscuit", desc: "Oven glazed rock salt encrusted brown flour loops.", img: "https://images.unsplash.com/photo-1599599810769-bcde5a160d32?auto=format&fit=crop&w=300&q=80" },
+
+            // --- BEVERAGES ---
+            { id: 41, name: "Orange Juice Bottle", price: 95, category: "Beverages", type: "Extracted Liquid", desc: "Cold pressed real citrus fruit extraction juice.", img: "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?auto=format&fit=crop&w=300&q=80" },
+            { id: 42, name: "Premium Mineral Water", price: 35, category: "Beverages", type: "Fortified Water", desc: "Multi-stage filter pure drinking water bottle.", img: "https://images.unsplash.com/photo-1608885898957-a599fb1698d6?auto=format&fit=crop&w=300&q=80" },
+            { id: 43, name: "Carbonated Cola Can", price: 40, category: "Beverages", type: "Soft Drink", desc: "Ice cold refreshing fizzy soft drinks.", img: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=300&q=80" },
+            { id: 44, name: "Organic Green Tea Box", price: 140, category: "Beverages", type: "Infusion Leaf", desc: "Anti-oxidant rich high mountain green tea leaves.", img: "https://images.unsplash.com/photo-1597481499750-3e6b22637e12?auto=format&fit=crop&w=300&q=80" },
+            { id: 45, name: "Roasted Coffee Beans", price: 290, category: "Beverages", type: "Ground Compound", desc: "Medium roast robusta blend coffee beans.", img: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=300&q=80" },
+            { id: 46, name: "Sparkling Apple Cider", price: 180, category: "Beverages", type: "Carbonated Fruit", desc: "Non alcoholic carbonated apple juice extract.", img: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=300&q=80" },
+            { id: 47, name: "Natural Coconut Water", price: 50, category: "Beverages", type: "Isotonic Fluid", desc: "Pure tender organic tree tapped clear cooling fluids.", img: "https://images.unsplash.com/photo-1543362906-acfc16c67564?auto=format&fit=crop&w=300&q=80" },
+            { id: 48, name: "Energy Drink Taurine Fly", price: 110, category: "Beverages", type: "Stimulant Fluid", desc: "B-vitamin and high caffeine enhanced performance drink.", img: "https://images.unsplash.com/photo-1622543953495-a270361d667c?auto=format&fit=crop&w=300&q=80" },
+            { id: 49, name: "Diet Lemonade Zero", price: 65, category: "Beverages", type: "Sugar Free Soda", desc: "Zero calorie carbonated lemon mix.", img: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=300&q=80" },
+            { id: 50, name: "Instant Ginger Ale", price: 70, category: "Beverages", type: "Root Infused Soda", desc: "Sharp soothing natural root ginger extract fizzy mix.", img: "https://images.unsplash.com/photo-1624517452488-04869289c4ca?auto=format&fit=crop&w=300&q=80" },
+
+            // --- HOUSEHOLD ITEMS ---
+            { id: 51, name: "Dishwashing Liquid Soap", price: 85, category: "Household Items", type: "Cleansing Agent", desc: "Tough on grease lemon infused liquid soap solution.", img: "https://images.unsplash.com/photo-1607344645866-009c320c5ab8?auto=format&fit=crop&w=300&q=80" },
+            { id: 52, name: "Ultra Soft Tissue Box", price: 110, category: "Household Items", type: "Cellulose Paper", desc: "Absorbent thick multi-ply facial tissue paper.", img: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=300&q=80" },
+            { id: 53, name: "Liquid Floor Cleaner", price: 140, category: "Household Items", type: "Disinfectant Sol", desc: "Kills germs completely while providing high floor gloss shine.", img: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=300&q=80" },
+            { id: 54, name: "Front Load Laundry Pods", price: 230, category: "Household Items", type: "Detergent Unit", desc: "Highly concentrated advanced laundry cleaner capsules.", img: "https://images.unsplash.com/photo-1545241047-6083a3684587?auto=format&fit=crop&w=300&q=80" },
+            { id: 55, name: "Garbage Bags Roll Large", price: 90, category: "Household Items", type: "Polyethylene Liners", desc: "Heavy duty leak-proof black waste management plastics.", img: "https://images.unsplash.com/photo-1610557892470-55d9e80e0bce?auto=format&fit=crop&w=300&q=80" },
+            { id: 56, name: "Microfiber Polishing Cloths", price: 120, category: "Household Items", type: "Textile Tool", desc: "Synthetic static catching scratch free surface dusters pack.", img: "https://images.unsplash.com/photo-1574063413132-355dbfd83e82?auto=format&fit=crop&w=300&q=80" },
+            { id: 57, name: "Natural Mosquito Coils", price: 45, category: "Household Items", type: "Repellent Incense", desc: "Pyrethroid plant formula slow smoldering insect barrier spirals.", img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=300&q=80" },
+            { id: 58, name: "Air Freshener Spray Rose", price: 160, category: "Household Items", type: "Aerosol Parfum", desc: "Concentrated odor neutralizing room scent fine mists.", img: "https://images.unsplash.com/photo-1528740561666-42478bd02b76?auto=format&fit=crop&w=300&q=80" },
+            { id: 59, name: "Multipurpose Sponge Scrub", price: 35, category: "Household Items", type: "Abrasive Pad", desc: "Dual side nylon mesh soft porous cleaning blocks.", img: "https://images.unsplash.com/photo-1583947215259-38e31be8751f?auto=format&fit=crop&w=300&q=80" },
+            { id: 60, name: "LED Eco Bulb 9W", price: 99, category: "Household Items", type: "Hardware Electronic", desc: "Energy efficient crystal clear cool day white light hardware.", img: "https://images.unsplash.com/photo-1550537687-c91072c4792d?auto=format&fit=crop&w=300&q=80" }
+        ];
+
+        let globalShoppingBasket = [];
+        let historicalTransactionsList = [];
+        let currentFilteredCategorySelection = "All";
+        
+        // Internal persistence engine mock database
+        const registeredCustomerDatabase = {
+            "9876543210": { id: "FM-ID-4402", name: "Sivaraman", phone: "9876543210", address: "24/A AMMAN KOVIL STREET, MAHARAJAPURAM", coins: 145.50 }
+        };
+
+        let currentActiveCustomerProfile = { id: "", name: "", phone: "", address: "", coins: 0.00 };
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initializeGalaxyParallaxMovement();
+            generateNewTemporaryCustomerId();
+            renderProductCardsToShelfGrid(productsMasterInventoryList);
+            refreshBasketCalculationMetrics();
+        });
+
+        function initializeGalaxyParallaxMovement() {
+            const surfacePlane = document.getElementById('starfield-parallax');
+            window.addEventListener('mousemove', (mouseEvent) => {
+                const horizontalDelta = (mouseEvent.clientX / window.innerWidth - 0.5) * 45;
+                const verticalDelta = (mouseEvent.clientY / window.innerHeight - 0.5) * 45;
+                surfacePlane.style.transform = `translate3d(${horizontalDelta}px, ${verticalDelta}px, -150px) rotateX(${-verticalDelta * 0.1}deg) rotateY(${horizontalDelta * 0.1}deg)`;
+            });
+        }
+
+        function triggerOnScreenToastNotification(textMessage, layoutClassType = "success-alert") {
+            const wrapperBox = document.getElementById('notification-toast-box');
+            const alertElement = document.createElement('div');
+            alertElement.className = `toast-banner ${layoutClassType}`;
+            alertElement.innerHTML = `<i class="fa-solid fa-satellite-dish"></i> <span>${textMessage}</span>`;
+            
+            wrapperBox.appendChild(alertElement);
+            setTimeout(() => { alertElement.remove(); }, 4000);
+        }
+
+        function generateNewTemporaryCustomerId() {
+            currentActiveCustomerProfile = {
+                id: "FM-ID-" + Math.floor(1000 + Math.random() * 9000),
+                name: "",
+                phone: currentActiveCustomerProfile.phone || "",
+                address: "",
+                coins: 0.00
+            };
+            syncActiveProfileToFormFields(false);
+        }
+
+        function syncActiveProfileToFormFields(isAutoFilledMatches = false) {
+            document.getElementById('form-cust-id').value = currentActiveCustomerProfile.id;
+            document.getElementById('form-cust-coins').value = `₹${currentActiveCustomerProfile.coins.toFixed(2)}`;
+            document.getElementById('form-cust-phone').value = currentActiveCustomerProfile.phone;
+            
+            const fieldName = document.getElementById('form-cust-name');
+            const fieldAddr = document.getElementById('form-cust-address');
+
+            fieldName.value = currentActiveCustomerProfile.name;
+            fieldAddr.value = currentActiveCustomerProfile.address;
+
+            if (isAutoFilledMatches) {
+                fieldName.setAttribute('readonly', 'true');
+                fieldAddr.setAttribute('readonly', 'true');
+            } else {
+                fieldName.removeAttribute('readonly');
+                fieldAddr.removeAttribute('readonly');
+            }
+        }
+
+        // Auto Profile Identity Retrieval Module
+        function handleAutomatedPhoneLookup(typedPhoneNumberString) {
+            const cleanNumberValue = typedPhoneNumberString.trim();
+            currentActiveCustomerProfile.phone = cleanNumberValue;
+
+            if (cleanNumberValue.length >= 10) {
+                const matchedIdentityProfile = registeredCustomerDatabase[cleanNumberValue];
+                
+                if (matchedIdentityProfile) {
+                    currentActiveCustomerProfile = { ...matchedIdentityProfile };
+                    syncActiveProfileToFormFields(true);
+                    triggerOnScreenToastNotification(`Welcome back ${matchedIdentityProfile.name}! Profile Loaded.`, "welcome-alert");
+                } else {
+                    // Profile not found -> Assign a new generic profile layout but leave inputs wide open
+                    generateNewTemporaryCustomerId();
+                }
+            } else {
+                document.getElementById('form-cust-name').removeAttribute('readonly');
+                document.getElementById('form-cust-address').removeAttribute('readonly');
+            }
+        }
+
+        // Owner live price modification channel
+        function alterItemPriceByOwner(productId) {
+            const targetPriceInput = document.getElementById(`owner-price-field-${productId}`);
+            const freshModifiedPrice = parseFloat(targetPriceInput.value);
+
+            if (isNaN(freshModifiedPrice) || freshModifiedPrice <= 0) {
+                alert("Please enter a valid wholesale price currency value.");
+                return;
+            }
+
+            const masterProductIndex = productsMasterInventoryList.findIndex(p => p.id === productId);
+            if (masterProductIndex > -1) {
+                productsMasterInventoryList[masterProductIndex].price = freshModifiedPrice;
+                
+                // Instantly update current shopping baskets containing this modified listing row
+                globalShoppingBasket.forEach(lineItem => {
+                    if (lineItem.product.id === productId) {
+                        lineItem.product.price = freshModifiedPrice;
+                    }
+                });
+
+                refreshBasketCalculationMetrics();
+                
+                // Re-sync full catalog visual UI components
+                if (currentFilteredCategorySelection === "All") {
+                    renderProductCardsToShelfGrid(productsMasterInventoryList);
+                } else {
+                    renderProductCardsToShelfGrid(productsMasterInventoryList.filter(p => p.category === currentFilteredCategorySelection));
+                }
+
+                triggerOnScreenToastNotification("Product inventory value adjusted by shop owner.", "welcome-alert");
+                closeProductModal();
+            }
+        }
+
+        function switchActiveView(targetViewId) {
+            document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active-page'));
+            document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+
+            const targetNode = document.getElementById(`pageview-${targetViewId}`);
+            if (targetNode) targetNode.classList.add('active-page');
+
+            const activeAnchor = document.getElementById(`navitem-${targetViewId}`);
+            if (activeAnchor) activeAnchor.classList.add('active');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleColorTheme() {
+            const docRoot = document.documentElement;
+            const target = docRoot.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+            docRoot.setAttribute('data-theme', target);
+        }
+
+        function routeToFilteredCategory(categoryKeyName) {
+            currentFilteredCategorySelection = categoryKeyName;
+            const list = productsMasterInventoryList.filter(p => p.category === categoryKeyName);
+            document.getElementById('product-shelf-title-header').innerText = `${categoryKeyName} Department`;
+            renderProductCardsToShelfGrid(list);
+            switchActiveView('products');
+        }
+
+        function renderProductCardsToShelfGrid(dataset) {
+            const container = document.getElementById('product-render-target-grid');
+            container.innerHTML = '';
+
+            dataset.forEach(pItem => {
+                container.innerHTML += `
+                    <div class="product-shelf-card">
+                        <img src="${pItem.img}" alt="${pItem.name}" class="product-shelf-img" onclick="openProductModal(${pItem.id})">
+                        <h4 class="product-shelf-title" onclick="openProductModal(${pItem.id})">${pItem.name}</h4>
+                        <span class="product-shelf-price">₹${pItem.price.toFixed(2)}</span>
+                        <button class="block-action-btn" onclick="silentlyPushItemToBasket(${pItem.id})">Add To Cart</button>
+                    </div>
+                `;
+            });
+        }
+
+        function silentlyPushItemToBasket(productId) {
+            const objectReference = productsMasterInventoryList.find(i => i.id === productId);
+            const crossCheckIndex = globalShoppingBasket.findIndex(x => x.product.id === productId);
+
+            if (crossCheckIndex > -1) {
+                globalShoppingBasket[crossCheckIndex].qty += 1;
+            } else {
+                // Ensure a shallow detached copy of item metrics is pushed to keep calculations uniform
+                globalShoppingBasket.push({ product: { ...objectReference }, qty: 1 });
+            }
+            refreshBasketCalculationMetrics();
+            triggerOnScreenToastNotification(`Added ${objectReference.name} to your basket rows.`);
+        }
+
+        function changeBasketLineQuantity(index, step) {
+            globalShoppingBasket[index].qty += step;
+            if (globalShoppingBasket[index].qty < 1) globalShoppingBasket.splice(index, 1);
+            refreshBasketCalculationMetrics();
+        }
+
+        function refreshBasketCalculationMetrics() {
+            let totalQty = 0;
+            let finalSumTotal = 0;
+            const targetContainer = document.getElementById('checkout-basket-lines-container');
+            targetContainer.innerHTML = '';
+
+            globalShoppingBasket.forEach((row, i) => {
+                totalQty += row.qty;
+                const lineTotalCost = row.product.price * row.qty;
+                finalSumTotal += lineTotalCost;
+
+                targetContainer.innerHTML += `
+                    <div class="basket-item-line">
+                        <div>
+                            <strong>${row.product.name}</strong><br>
+                            <small style="color:var(--light-text)">₹${row.product.price.toFixed(2)} x ${row.qty}</small>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:15px;">
+                            <div class="quantity-pill">
+                                <button type="button" onclick="changeBasketLineQuantity(${i}, -1)">-</button>
+                                <span>${row.qty}</span>
+                                <button type="button" onclick="changeBasketLineQuantity(${i}, 1)">+</button>
+                            </div>
+                            <span style="font-weight:600; min-width:60px; text-align:right;">₹${lineTotalCost.toFixed(2)}</span>
+                        </div>
+                    </div>
+                `;
+            });
+
+            if (globalShoppingBasket.length === 0) {
+                targetContainer.innerHTML = `<p style="color:var(--light-text); text-align:center; padding:20px 0;">Your basket is empty.</p>`;
+            }
+
+            document.getElementById('cart-badge').innerText = totalQty;
+            document.getElementById('txt-calculated-gross-total').innerText = `₹${finalSumTotal.toFixed(2)}`;
+        }
+
+        function commitCheckoutFormOrder(event) {
+            event.preventDefault();
+
+            if (globalShoppingBasket.length === 0) {
+                triggerOnScreenToastNotification("Basket empty! Pick items before checking out.", "welcome-alert");
+                return;
+            }
+
+            const inputName = document.getElementById('form-cust-name').value.trim();
+            const inputPhone = document.getElementById('form-cust-phone').value.trim();
+            const inputAddress = document.getElementById('form-cust-address').value.trim();
+            const billValueString = document.getElementById('txt-calculated-gross-total').innerText;
+            const numericTotalCost = parseFloat(billValueString.replace('₹', ''));
+
+            const calculatedCoinsEarned = numericTotalCost * 0.10;
+            const preliminaryStartingWalletBalance = currentActiveCustomerProfile.coins;
+
+            // Commit updates to profile cache elements
+            currentActiveCustomerProfile.name = inputName;
+            currentActiveCustomerProfile.phone = inputPhone;
+            currentActiveCustomerProfile.address = inputAddress;
+            currentActiveCustomerProfile.coins += calculatedCoinsEarned;
+
+            // Save inside persistent database reference rows
+            registeredCustomerDatabase[inputPhone] = { ...currentActiveCustomerProfile };
+
+            const generatedOrderId = "ORD-" + Math.floor(100000 + Math.random() * 900000);
+            const stampTimeStr = new Date().toLocaleString();
+
+            let receiptItemLinesHtml = '';
+            let rawDescriptionSummaryStrings = [];
+
+            globalShoppingBasket.forEach(line => {
+                rawDescriptionSummaryStrings.push(`${line.product.name} (x${line.qty})`);
+                receiptItemLinesHtml += `
+                    <div style="display:flex; justify-content:space-between; font-size:13px; font-family:monospace; margin-bottom:4px;">
+                        <span>* ${line.product.name} x ${line.qty}</span>
+                        <span>₹${(line.product.price * line.qty).toFixed(2)}</span>
+                    </div>
+                `;
+            });
+
+            // Reconstruct visible print receipt frames - Now featuring structural starting wallet indices
+            document.getElementById('printable-invoice-slip').innerHTML = `
+                <div class="receipt-header-title">
+                    <h2>FRESH MART GROCERY</h2>
+                    <p style="font-size:12px; font-weight:bold;">COMPREHENSIVE MULTI-CHANNEL DISTRIBUTION PORTAL</p>
+                    <p style="font-size:11px;">Store Helpline Support Desk Assistance Available</p>
+                </div>
+                <div style="border-top:1px dashed #2c3e50; margin:15px 0;"></div>
+                <p style="font-size:12px; font-family:monospace;"><strong>BILL ID     :</strong> ${generatedOrderId}</p>
+                <p style="font-size:12px; font-family:monospace;"><strong>TIMESTAMP   :</strong> ${stampTimeStr}</p>
+                <p style="font-size:12px; font-family:monospace;"><strong>CUSTOMER ID :</strong> ${currentActiveCustomerProfile.id}</p>
+                <p style="font-size:12px; font-family:monospace;"><strong>CLIENT NAME :</strong> ${inputName}</p>
+                <p style="font-size:12px; font-family:monospace;"><strong>PHONE NO    :</strong> ${inputPhone}</p>
+                <p style="font-size:12px; font-family:monospace; margin-bottom:10px;"><strong>ADDRESS     :</strong> ${inputAddress}</p>
+                <div style="border-top:1px dashed #2c3e50; margin:15px 0;"></div>
+                ${receiptItemLinesHtml}
+                <div style="border-top:1px dashed #2c3e50; margin:15px 0;"></div>
+                <p style="font-size:12px; font-family:monospace; display:flex; justify-content:between;">
+                    <span>OLD WALLET BALANCE :</span> <span>₹${preliminaryStartingWalletBalance.toFixed(2)}</span>
+                </p>
+                <p style="font-size:12px; font-family:monospace; display:flex; justify-content:between; color:#27ae60;">
+                    <span>+ COINS EARNED THIS BILL :</span> <span>₹${calculatedCoinsEarned.toFixed(2)}</span>
+                </p>
+                <p style="font-size:13px; font-family:monospace; display:flex; justify-content:between; font-weight:bold; margin-bottom:5px;">
+                    <span>TOTAL WALLET AMOUNT   :</span> <span>₹${currentActiveCustomerProfile.coins.toFixed(2)}</span>
+                </p>
+                <div style="border-top:1px dashed #2c3e50; margin:10px 0;"></div>
+                <div style="display:flex; justify-content:space-between; font-size:18px; font-weight:bold; font-family:monospace;">
+                    <span>TOTAL CASH DUE:</span><span>${billValueString}</span>
+                </div>
+                <div style="border-top:1px dashed #2c3e50; margin:15px 0;"></div>
+                <p style="text-align:center; font-size:12px; font-weight:bold; font-family:monospace;">MODE: CASH ON DELIVERY</p>
+            `;
+
+            historicalTransactionsList.unshift({
+                id: generatedOrderId,
+                time: stampTimeStr,
+                summary: rawDescriptionSummaryStrings.join(', '),
+                cost: billValueString,
+                addr: inputAddress
+            });
+
+            renderHistoricalTableRows();
+
+            globalShoppingBasket = [];
+            refreshBasketCalculationMetrics();
+            
+            document.getElementById('wrapper-current-invoice-card').style.display = "block";
+            document.getElementById('inline-alert-success-box').style.display = "flex";
+            
+            generateNewTemporaryCustomerId();
+            document.getElementById('checkout-core-form').reset();
+            syncActiveProfileToFormFields(false);
+            
+            switchActiveView('billing');
+            triggerOnScreenToastNotification("Success! Delivery processing ledger updated.", "success-alert");
+        }
+
+        function renderHistoricalTableRows() {
+            const tableNode = document.getElementById('history-log-table-rows');
+            tableNode.innerHTML = '';
+
+            historicalTransactionsList.forEach(log => {
+                tableNode.innerHTML += `
+                    <tr>
+                        <td style="font-family:monospace; font-weight:600; color:var(--primary-color);">${log.id}</td>
+                        <td style="font-size:12px; white-space:nowrap;">${log.time}</td>
+                        <td style="font-size:13px;">${log.summary}</td>
+                        <td style="font-weight:700; color:var(--primary-color);">${log.cost}</td>
+                        <td style="font-size:13px; color:var(--light-text);">${log.addr}</td>
+                    </tr>
+                `;
+            });
+        }
+
+        function openProductModal(id) {
+            const matchedItem = productsMasterInventoryList.find(x => x.id === id);
+            if (!matchedItem) return;
+
+            document.getElementById('modal-content-inject-target').innerHTML = `
+                <img src="${matchedItem.img}" style="width:100%; height:200px; object-fit:cover; border-radius:12px; margin-bottom:15px;">
+                <h3 style="color:#ffffff; margin-bottom:5px;">${matchedItem.name}</h3>
+                <p style="font-size:13px; color:var(--primary-color); font-weight:600; margin-bottom:12px;"><i class="fa-solid fa-tag"></i> Type: ${matchedItem.type}</p>
+                <p style="font-size:14px; color:var(--light-text); line-height:1.6; margin-bottom:15px;">${matchedItem.desc}</p>
+                
+                <!-- Owner Direct Rate Configurations Dashboard Subsystem -->
+                <div class="owner-price-config-box">
+                    <label><i class="fa-solid fa-user-gear"></i> Owner Price Configuration Desk</label>
+                    <div class="owner-price-input-row">
+                        <input type="number" id="owner-price-field-${matchedItem.id}" value="${matchedItem.price}" step="any" min="0.1">
+                        <button type="button" class="owner-update-btn" onclick="alterItemPriceByOwner(${matchedItem.id})">Update Rate</button>
+                    </div>
+                </div>
+                <br>
+                <button class="block-action-btn" onclick="silentlyPushItemToBasket(${matchedItem.id}); closeProductModal();">Add To Basket</button>
+            `;
+            document.getElementById('details-modal-wrapper').style.display = "flex";
+        }
+
+        function closeProductModal() {
+            document.getElementById('details-modal-wrapper').style.display = "none";
+        }
+    </script>
+</body>
+</html>
